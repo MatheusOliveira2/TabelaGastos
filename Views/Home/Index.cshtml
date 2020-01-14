@@ -4,7 +4,7 @@
 
 
 <head>
-    <script src="html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="row">
-            <form class="col-12" id="formulario" action="">
+            <form class="col-12" id="formulario">
                 <h2>Dados Pessoais</h2>
                 <div class="form-row">
                     <div class="form-group col-md-8">
@@ -216,11 +216,9 @@
     }
 
     function CriaPDF() {
-        // Choose the element that our invoice is rendered in.
-        const element = document.getElementById("formulario");
-        // Choose the element and save the PDF for our user.
-        html2pdf()
-          .from(element)
-          .save();                                
+        var table = document.getElementById('formulario');
+        var doc = new jsPDF();
+        doc.fromHTML(table, 15, 15);   
+        doc.save("teste.pdf");
     }
 </script>
