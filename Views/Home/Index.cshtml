@@ -80,7 +80,7 @@
             <div class="col-12">
                 <br />
                 <H2>Resumo</H2>
-                <table class="table table-bordered" id="tabela_gastos">
+                <table class="table table-bordered" id="tabelaResumo">
                     <thead>
                         <tr>
                             <td>Alimentação</td>
@@ -147,26 +147,26 @@
             <div class="col-12">
                 <br />
                 <H2>Origens</H2>
-                <table class="table table-bordered" id="tabela_gastos">
+                <table class="table table-bordered" id="tabelaOrigens">
                     <thead>
-                        <tr>
-                            <td>Cartão</td>
-                            <td>R$0.00</td>
-                        </tr>
                         <tr>
                             <td>Adiantamento</td>
                             <td>R$0.00</td>
                         </tr>
                         <tr>
-                            <td>Faturado</td>
+                            <td>Cartão</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Dinheiro de Saque</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Faturamento</td>
                             <td>R$0.00</td>
                         </tr>
                         <tr>
                             <td>Reembolso</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Saque</td>
                             <td>R$0.00</td>
                         </tr>
                         <tr>
@@ -200,11 +200,12 @@
         var apagar = x.insertCell(4);
 
         data.innerHTML = '<td><input type="date" class="form-control"></td>';
-        despesa.innerHTML = '<td><select class="custom-select"><option value="1">Alimentação</option><option value="2">Aluguel de Carro</option><option value="3">Combustível</option><option value="4">Estacionamento</option><option value="5">Evento</option><option value="6">Hospedagem</option><option value="7">Manutenção Carro</option><option value="8">Outros</option><option value="9">Passagem</option><option value="10">Pedágio</option><option value="11">Saque</option><option value="12">Táxi/Uber</option><option value="13">Utilização de Veículo Próprio</option></select></td>';
-        valor.innerHTML = '<td><input type="text" class="form-control"></td>';
-        descricao.innerHTML = '<td><select class="custom-select"> <option value="1">Cartão</option> <option value="2">Dinheiro de Saque</option> <option value="3">Adiantamento</option> <option value="4">Reembolso</option> <option value="5">Faturamento</option> </select></td>'
+        despesa.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"><option value="1">Alimentação</option><option value="2">Aluguel de Carro</option><option value="3">Combustível</option><option value="4">Estacionamento</option><option value="5">Evento</option><option value="6">Hospedagem</option><option value="7">Manutenção Carro</option><option value="8">Outros</option><option value="9">Passagem</option><option value="10">Pedágio</option><option value="11">Saque</option><option value="12">Táxi/Uber</option><option value="13">Utilização de Veículo Próprio</option></select></td>';
+        valor.innerHTML = '<td><input type="text" class="form-control" onchange="UpdateTables(this)"></td>';
+        descricao.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"> <option value="1">Adiantamento</option> <option value="2">Cartão</option><option value="3">Dinheiro de Saque</option> <option value="4">Faturamento</option> <option value="5">Reembolso</option><option value="6">Tarifa de Saque</option> </select></td>'
         apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(\'tabela_gastos\',this)">Apagar</button><td>';
 
+        
          
     }
 
@@ -213,6 +214,7 @@
     {
         var x = document.getElementById(tableId);
         x.deleteRow(elemento.parentNode.parentNode.rowIndex);
+        UpdateTables();
     }
 
     function CriaPDF() {
@@ -220,5 +222,44 @@
         var doc = new jsPDF();
         doc.fromHTML(table, 15, 15);   
         doc.save("teste.pdf");
+    }
+
+    function UpdateTables() {
+        resumo = document.getElementById('tabelaResumo').rows;
+        origens = document.getElementById('tabelaOrigens').rows;
+        gastos = document.getElementById('tabela_gastos').rows;
+
+        despesas = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+        descricoes = [0.0, 0.0, 0.0, 0.0, 0.0,0.0];
+
+        var total = 0.0;
+        for (i = 1; i < gastos.length; i++)
+        {   
+            despesa = gastos[i].cells[1].firstChild.value;
+            valor = gastos[i].cells[2].firstChild.value;
+            descricao = gastos[i].cells[3].firstChild.value;
+            
+            total += parseFloat(valor);
+            despesas[despesa - 1] += parseFloat(valor);
+            descricoes[descricao - 1] += parseFloat(valor);
+           
+        }
+        
+        
+        for (var i = 0; i < resumo.length-1; i++)
+        {
+            resumo[i].cells[1].innerHTML = "R$" + despesas[i].toFixed(2);
+            
+        }
+
+        for (var i = 0; i < origens.length-1; i++)
+        {
+            origens[i].cells[1].innerHTML = "R$" + descricoes[i].toFixed(2);
+        }
+
+        
+        resumo[resumo.length-1].cells[1].innerHTML = ("R$" + total.toFixed(2)).bold();
+        origens[origens.length-1].cells[1].innerHTML = ("R$" + total.toFixed(2)).bold();
+        
     }
 </script>
