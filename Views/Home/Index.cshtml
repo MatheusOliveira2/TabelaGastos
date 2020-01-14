@@ -2,66 +2,225 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="text-center col-sm">
-            <h1 class="display-4">Teste</h1>
-            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<head>
+    <script src="html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="text-center col-sm">
+                <h1 class="display-4">Gastos</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <form class="col-12" id="formulario" action="">
+                <h2>Dados Pessoais</h2>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Viagem</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Data(Início)</label>
+                        <input type="date" class="form-control" placeholder="Data">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Data(Fim)</label>
+                        <input type="date" class="form-control" placeholder="Data">
+                    </div>
+                    <div class="form-group col-md-4"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Funcionário</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Número do Cartão</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Objetivo</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <br />
+                <H2>Tabela de Gastos</H2>
+
+                <table class="table" id="tabela_gastos">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Despesa</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Apagar</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="col-12 text-left">
+                    <button type="button" class="btn btn-primary" onclick="addRowToTable('tabela_gastos')">Adicionar</button><br /><br />
+                </div>
+
+                <div class="col-12 text-left">
+                    <button type="button" class="btn btn-warning" onclick="CriaPDF()">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <br />
+                <H2>Resumo</H2>
+                <table class="table table-bordered" id="tabela_gastos">
+                    <thead>
+                        <tr>
+                            <td>Alimentação</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Aluguel de Carro</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Combustível</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Estacionamento</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Evento</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Hospedagem</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Manutenção Carro</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Outros</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Passagem</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Pedágio</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Saque</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Táxi/Uber</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Utilização de Veículo Próprio</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td><b>R$0.00</b></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <br />
+                <H2>Origens</H2>
+                <table class="table table-bordered" id="tabela_gastos">
+                    <thead>
+                        <tr>
+                            <td>Cartão</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Adiantamento</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Faturado</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Reembolso</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Saque</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tarifa de Saque</td>
+                            <td>R$0.00</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td><b>R$0.00</b></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <form class="col-12">
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label>Nome</label>
-                    <select class="custom-select">
-                        <option value="1">Joao</option>
-                        <option value="2">Fulano</option>
-                        <option value="3">Ciclano</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Data</label>
-                    <input type="date" class="form-control" placeholder="Data">
-                </div>
-                <div class="form-group col-md-4"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label>Local</label>
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-            <br />
-            <H2>Tabela de Gastos</H2>
+    
+</body>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Local</th>
-                        <th scope="col">Valor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-</div>
+
+
+
+<script>
+    function addRowToTable(tableId)
+    {
+        var x = document.getElementById(tableId).insertRow();
+        var data = x.insertCell(0);
+        var despesa = x.insertCell(1);
+        var valor = x.insertCell(2);
+        var descricao = x.insertCell(3);
+        var apagar = x.insertCell(4);
+
+        data.innerHTML = '<td><input type="date" class="form-control"></td>';
+        despesa.innerHTML = '<td><select class="custom-select"><option value="1">Alimentação</option><option value="2">Aluguel de Carro</option><option value="3">Combustível</option><option value="4">Estacionamento</option><option value="5">Evento</option><option value="6">Hospedagem</option><option value="7">Manutenção Carro</option><option value="8">Outros</option><option value="9">Passagem</option><option value="10">Pedágio</option><option value="11">Saque</option><option value="12">Táxi/Uber</option><option value="13">Utilização de Veículo Próprio</option></select></td>';
+        valor.innerHTML = '<td><input type="text" class="form-control"></td>';
+        descricao.innerHTML = '<td><select class="custom-select"> <option value="1">Cartão</option> <option value="2">Dinheiro de Saque</option> <option value="3">Adiantamento</option> <option value="4">Reembolso</option> <option value="5">Faturamento</option> </select></td>'
+        apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(\'tabela_gastos\',this)">Apagar</button><td>';
+
+         
+    }
+
+    
+    function deleteRow(tableId,elemento)
+    {
+        var x = document.getElementById(tableId);
+        x.deleteRow(elemento.parentNode.parentNode.rowIndex);
+    }
+
+    function CriaPDF() {
+        // Choose the element that our invoice is rendered in.
+        const element = document.getElementById("formulario");
+        // Choose the element and save the PDF for our user.
+        html2pdf()
+          .from(element)
+          .save();                                
+    }
+</script>
