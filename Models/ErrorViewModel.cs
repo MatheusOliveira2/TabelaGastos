@@ -1,6 +1,6 @@
 using System;
 
-namespace teste.Models
+namespace gastos.Models
 {
     public class ErrorViewModel
     {

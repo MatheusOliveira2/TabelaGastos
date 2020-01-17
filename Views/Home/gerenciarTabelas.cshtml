@@ -1,0 +1,87 @@
+﻿@using gastos.Controllers;
+@{
+    ViewData["Title"] = "gerenciarTabelas";
+}
+
+    <head>
+        <script src="~/js/jQueryMin.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="text-center col-sm">
+                    <h1 class="display-4">Gerenciamento de Tabelas</h1>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 text-center">
+                    <h2>Categorias de Despesa</h2>
+
+                    <table class="table" id="tabelaResumo">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Apagar</th>
+                            </tr>
+                    </table>
+                    <div class="col-12 text-left" style="padding:0">
+                        <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaResumo')">Adicionar</button>
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                    <h2>Categorias de Descrição</h2>
+                    <table class="table" id="tabelaOrigens">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Apagar</th>
+                            </tr>
+                    </table>
+                    <div class="col-12 text-left" style="padding:0">
+                        <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaOrigens')">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-left" style="padding:0">
+                <br />
+                <button type="button" class="btn btn-warning" onclick="salvar('tabelaResumo','tabelaOrigens')">Salvar</button>
+            </div>
+        </div>
+    </body>
+
+<script>
+    function addRowToTable(tableId) {
+        var x = document.getElementById(tableId).insertRow();
+        var nome = x.insertCell(0);
+        var apagar = x.insertCell(1);
+     
+        nome.innerHTML = '<td><input type="text" class="form-control"></td>';
+        apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(this.parentNode.parentNode.parentNode,this)">Apagar</button><td>';
+
+    }
+
+    //Deleta linha da tabela de gastos
+    function deleteRow(table, elemento) {
+        table.deleteRow(elemento.parentNode.parentNode.rowIndex);
+        //UpdateTables();
+    }
+
+    function salvar(resumo, origens) {
+        var tabelaResumo = document.getElementById(resumo).rows;
+        var tabelaOrigens = document.getElementById(origens).rows;
+
+        var listaResumo = [];
+
+        for (var i = 1; i < tabelaResumo.length; i++) {
+            listaResumo.push(tabelaResumo[i].cells[0].firstChild.value);
+        }
+        $.post(')
+        
+        @{HomeController.SalvarTabelas(listaResumo);}
+    }
+
+</script>
+

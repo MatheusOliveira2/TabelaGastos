@@ -5,9 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using teste.Models;
+using gastos.Models;
 
-namespace teste.Controllers
+
+namespace gastos.Controllers
 {
     public class HomeController : Controller
     {
@@ -26,6 +27,15 @@ namespace teste.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult gerenciarTabelas() 
+        {
+            return View();
+        }
+
+        public static void SalvarTabelas() {
+            Models.Resumo.salvarClasses();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
