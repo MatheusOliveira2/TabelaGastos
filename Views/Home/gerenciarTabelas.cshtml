@@ -7,7 +7,7 @@
         <script src="~/js/jQueryMin.js"></script>
     </head>
 
-    <body onload="preencherTabelas('tabelaResumo')">
+    <body onload="preencherTabelas('tabelaResumo','tabelaOrigens')">
         <div class="container">
             <div class="row">
                 <div class="text-center col-sm">
@@ -77,11 +77,13 @@
         var listaResumo = [];
         var listaOrigens = [];
         for (var i = 1; i < tabelaResumo.length; i++) {
-            listaResumo.push(tabelaResumo[i].cells[0].firstChild.value);
+            if(tabelaResumo[i].cells[0].firstChild.value.length>0)
+                listaResumo.push(tabelaResumo[i].cells[0].firstChild.value);
         }
 
         for (var i = 1; i < tabelaOrigens.length; i++) {
-            listaOrigens.push(tabelaOrigens[i].cells[0].firstChild.value);
+            if(tabelaOrigens[i].cells[0].firstChild.value.length>0)
+                listaOrigens.push(tabelaOrigens[i].cells[0].firstChild.value);
         }
         
         var postData = { resumo: listaResumo, origens: listaOrigens };
@@ -95,24 +97,34 @@
 
     }
     
-    function preencherTabelas(tabela)
+    function preencherTabelas(tabelaResumo,tabelaOrigens)
     {
-        
         $.ajax({
             type: "POST",
             url: "/Home/CarregarItens",
             success: function (data) {
                 for (var i = 0; i < data.resumos.length; i++) {
-                    var tabelaInsert = document.getElementById(tabela).insertRow();
+                    var tabelaInsert = document.getElementById(tabelaResumo).insertRow();
                     var nome = tabelaInsert.insertCell(0);
                     var apagar = tabelaInsert.insertCell(1);
                     nome.innerHTML = '<td><input type="text" class="form-control"></td>';
                     apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(this.parentNode.parentNode.parentNode,this)">Apagar</button><td>';
                 }
-                var linhas = document.getElementById(tabela).rows;
-                alert(data.resumos[1]);
-                for (var i = 1; i < data.resumos.length; i++) {
-                    linhas[i].cells[0].firstChild.value = data.resumos[i-1];
+                var linhasResumo = document.getElementById(tabelaResumo).rows;
+                for (var i = 0; i < data.resumos.length; i++) {
+                    linhasResumo[i+1].cells[0].firstChild.value = data.resumos[i];
+                }
+                alert(data.origens)
+                for (var i = 0; i < data.origens.length; i++) {
+                    var tabelaInsert = document.getElementById(tabelaOrigens).insertRow();
+                    var nome = tabelaInsert.insertCell(0);
+                    var apagar = tabelaInsert.insertCell(1);
+                    nome.innerHTML = '<td><input type="text" class="form-control"></td>';
+                    apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(this.parentNode.parentNode.parentNode,this)">Apagar</button><td>';
+                }
+                var linhasOrigens = document.getElementById(tabelaOrigens).rows;
+                for (var i = 0; i < data.origens.length; i++) {
+                    linhasOrigens[i+1].cells[0].firstChild.value = data.origens[i];
                 }
                 
             }

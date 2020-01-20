@@ -21,6 +21,7 @@ namespace gastos.Models
             StreamReader ler = new StreamReader("teste.json");
             string json = ler.ReadToEnd();
             Resumo classes = JsonConvert.DeserializeObject<Resumo>(json);
+            ler.Close();
             return classes;
         }
 
