@@ -34,8 +34,21 @@ namespace gastos.Controllers
             return View();
         }
 
-        public static void SalvarTabelas() {
-            Models.Resumo.salvarClasses();
+
+        [HttpPost]
+        public string CarregarItens()
+        {
+            Resumo itens = new Resumo();
+            itens.lerClasses();
+            return "Retornou";
+        }
+
+        [HttpPost]
+        public void SalvarTabelas(List<string> resumo, List<string> origens){
+            Resumo classes = new Resumo();
+            classes.Resumos = resumo;
+            classes.Origens = origens; 
+            classes.salvarClasses();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
