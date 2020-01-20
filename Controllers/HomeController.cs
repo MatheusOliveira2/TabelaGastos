@@ -36,11 +36,11 @@ namespace gastos.Controllers
 
 
         [HttpPost]
-        public string CarregarItens()
+        public Resumo CarregarItens()
         {
             Resumo itens = new Resumo();
-            itens.lerClasses();
-            return "Retornou";
+            Resumo classes = itens.lerClasses();
+            return classes;
         }
 
         [HttpPost]

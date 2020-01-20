@@ -97,18 +97,27 @@
     
     function preencherTabelas(tabela)
     {
-        //tabelaInsert = document.getElementById(tabela).insertRow();
-        //var Nome = tabelaInsert.insertCell(0);
-        //var Apagar = tabelaInsert.insertCell(1);
-
-      
-        /*
+        
         $.ajax({
             type: "POST",
             url: "/Home/CarregarItens",
-            success: function(data) { alert(data); }
+            success: function (data) {
+                for (var i = 0; i < data.resumos.length; i++) {
+                    var tabelaInsert = document.getElementById(tabela).insertRow();
+                    var nome = tabelaInsert.insertCell(0);
+                    var apagar = tabelaInsert.insertCell(1);
+                    nome.innerHTML = '<td><input type="text" class="form-control"></td>';
+                    apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(this.parentNode.parentNode.parentNode,this)">Apagar</button><td>';
+                }
+                var linhas = document.getElementById(tabela).rows;
+                alert(data.resumos[1]);
+                for (var i = 1; i < data.resumos.length; i++) {
+                    linhas[i].cells[0].firstChild.value = data.resumos[i-1];
+                }
+                
+            }
         });
-        */
+        
         
     }
     

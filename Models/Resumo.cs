@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace gastos.Models
 {
@@ -17,16 +20,14 @@ namespace gastos.Models
         {
             StreamReader ler = new StreamReader("teste.json");
             string json = ler.ReadToEnd();
-            //Resumo object = (Resumo)JsonSerializer.Deserialize(json);
-            ler.Close();
-            
-            return this;
+            Resumo classes = JsonConvert.DeserializeObject<Resumo>(json);
+            return classes;
         }
 
         public void salvarClasses()
         { 
             StreamWriter salvar = new StreamWriter("teste.json");
-            string jsonClasses = JsonSerializer.Serialize(this);
+            string jsonClasses = JsonConvert.SerializeObject(this);
             salvar.WriteLine(jsonClasses);
             salvar.Close();
         }
