@@ -8,7 +8,7 @@
         <script src="~/js/autoTable.js"></script>
     </head>
 
-<body>
+<body onload="preencherTabelas('tabelaResumo','tabelaOrigens')">
     <div class="container" style="margin-top:20px">
         <div class="row">
             <div class="text-center col-sm">
@@ -81,71 +81,12 @@
                 <br />
                 <H2>Resumo</H2>
                 <table class="table table-bordered" id="tabelaResumo">
-                    <thead>
-                        <tr>
-                            <td>Alimentação</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Aluguel de Carro</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Combustível</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Estacionamento</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Evento</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Excesso de Bagagem</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Hospedagem</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Itens para Manutenção</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Manutenção Carro</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Outros</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Passagem</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Pedágio</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Saque</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Táxi/Uber</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Utilização de Veículo Próprio</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td><b>Total</b></td>
-                            <td><b>R$0.00</b></td>
-                        </tr>
+                    <colgroup>
+                        <col width="150" />
+                        <col width="50" />
+                    </colgroup>
+                    <thead >
+                        
                     </thead>
                 </table>
             </div>
@@ -156,44 +97,20 @@
                 <br />
                 <H2>Origens</H2>
                 <table class="table table-bordered" id="tabelaOrigens">
+                    <colgroup>
+                        <col width="150" />
+                        <col width="50" />
+                    </colgroup>
                     <thead>
-                        <tr>
-                            <td>Adiantamento</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Cartão</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Dinheiro de Saque</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Faturamento</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Reembolso</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Tarifa de Saque</td>
-                            <td>R$0.00</td>
-                        </tr>
-                        <tr>
-                            <td><b>Total</b></td>
-                            <td><b>R$0.00</b></td>
-                        </tr>
                     </thead>
                 </table>
             </div>
         </div>
-        <div class="col-12 text-left">
+        <div class="col-12 text-left" style="padding-left:0px">
             <button type="button" class="btn btn-warning" onclick="CriaPDF()">Salvar</button>
         </div>
     </div>
-
+    
 
 </body>
 
@@ -209,9 +126,38 @@
         var apagar = x.insertCell(5);
 
         data.innerHTML = '<td><input type="date" class="form-control"></td>';
-        despesa.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"><option value="1">Alimentação</option><option value="2">Aluguel de Carro</option><option value="3">Combustível</option><option value="4">Estacionamento</option><option value="5">Evento</option></option><option value="6">Excesso de Bagagem</option><option value="7">Hospedagem</option></option><option value="8">Itens para Manutenção</option><option value="9">Manutenção Carro</option><option value="10">Outros</option><option value="11">Passagem</option><option value="12">Pedágio</option><option value="13">Saque</option><option value="14">Táxi/Uber</option><option value="15">Utilização de Veículo Próprio</option></select></td>';
-        valor.innerHTML = '<td><input type="text" class="form-control" onchange="UpdateTables(this)" maxlength="5" onkeypress="return isNumberKey(event)"></td>';
-        descricao.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"> <option value="1">Adiantamento</option> <option value="2">Cartão</option><option value="3">Dinheiro de Saque</option> <option value="4">Faturamento</option> <option value="5">Reembolso</option><option value="6">Tarifa de Saque</option> </select></td>'
+        despesa.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"></select></td>';
+        var tabelaGastos = document.getElementById(tableId).rows;
+        var select = tabelaGastos[(tabelaGastos.length - 1)].cells[1].firstChild;
+        var options = [];
+
+        var tabelaResumo = document.getElementById("tabelaResumo").rows;
+        for (var i = 0; i < tabelaResumo.length-1; i++) {
+            options.push(tabelaResumo[i].cells[0].innerText);
+        }
+        for(var i = 0; i < options.length; i++) {
+            var opt = options[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = i;
+            select.appendChild(el);
+        }
+        valor.innerHTML = '<td><input type="text" class="form-control" onchange="UpdateTables(this)" onkeypress="return isNumberKey(event)"></td>';
+        descricao.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"></select></td>'
+        var selectDescricao = tabelaGastos[(tabelaGastos.length - 1)].cells[3].firstChild;
+        var optionsDescricao = [];
+
+        var tabelaOrigens = document.getElementById("tabelaOrigens").rows;
+        for (var i = 0; i < tabelaOrigens.length-1; i++) {
+            optionsDescricao.push(tabelaOrigens[i].cells[0].innerText);
+        }
+        for(var i = 0; i < optionsDescricao.length; i++) {
+            var opt = optionsDescricao[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = i;
+            selectDescricao.appendChild(el);
+        }
         observacao.innerHTML = '<td><input type="text" class="form-control"></td>';
         apagar.innerHTML = '<td><button type="button" class="btn btn-danger" onclick="deleteRow(\'tabela_gastos\',this)">Apagar</button><td>';
 
@@ -227,6 +173,7 @@
     //Gera PDF
     function CriaPDF() {
 
+        //Verifica se todos os campos obrigatórios estão preenchidos
         if (verificaCampos())
         {
             alert("Preencha todos os campos!");
@@ -269,7 +216,8 @@
             doc.autoTable(['', ''], rowResumo, { startY: 72, styles: { cellPadding: 1.5, fillColor: [196, 243, 200], textColor: 20, fontSize: 8 }, headerStyles: { textColor: 20, fontSize: 8 } });
 
             //Tabela de Origens
-            doc.text('Origens', 15, 180);
+            var posInicio = (70 + (tabelaResumo.length * 7));
+            doc.text('Origens', 15, posInicio);
             var tabelaOrigens = document.getElementById('tabelaOrigens').rows;
             var rowOrigens = [];
             for (var i = 0; i < tabelaOrigens.length; i++) {
@@ -279,27 +227,34 @@
                 rowOrigens.push(row);
                 row = [];
             }
-            doc.autoTable(['', ''], rowOrigens, { startY: 182, styles: { cellPadding: 1.5, fillColor: [196, 243, 200], textColor:20,fontSize:8 },headerStyles: {textColor:20,fontSize:8}});
+            doc.autoTable(['', ''], rowOrigens, { startY: posInicio+2, styles: { cellPadding: 1.5, fillColor: [196, 243, 200], textColor:20,fontSize:8 },headerStyles: {textColor:20,fontSize:8}});
 
-            var dicionarioDespesa = ['Alimentação', 'Aluguel de Carro', 'Combustível', 'Estacionamento', 'Evento','Excesso de Bagagem', 'Hospedagem','Itens para Manutenção', 'Manutenção Carro', 'Outros', 'Passagem', 'Pedágio', 'Saque', 'Táxi/Uber', 'Utilização de Veículo Próprio'];
-            var dicionarioDescricao = ['Adiantamento', 'Cartão', 'Dinheiro de Saque', 'Faturamento', 'Reembolso', 'Tarifa de Saque'];
+            var dicionarioDespesa = [];
+            var dicionarioDescricao = [];
 
+            for (var i = 0; i < tabelaResumo.length - 1; i++) {
+                dicionarioDespesa.push(tabelaResumo[i].cells[0].innerText);
+            }
+            for (var i = 0; i < tabelaOrigens.length - 1; i++) {
+                dicionarioDescricao.push(tabelaOrigens[i].cells[0].innerText);
+            }
             //Tabela de Gastos
-            doc.text('Detalhamento', 15, 232);
+            var posInicioDetalhamento = posInicio + 2 + (7 * tabelaOrigens.length)+5;
+            doc.text('Detalhamento', 15, posInicioDetalhamento);
             doc.setFontSize(16);
             var tabelaGastos = document.getElementById('tabela_gastos').rows;
             var rowGastos = [];
             for (var i = 1; i <= tabelaGastos.length-1; i++) {
                 var row = [];
                 row.push(changeDateFormat(tabelaGastos[i].cells[0].firstChild.value));
-                row.push(dicionarioDespesa[tabelaGastos[i].cells[1].firstChild.value - 1]);
+                row.push(dicionarioDespesa[tabelaGastos[i].cells[1].firstChild.value]);
                 row.push("R$" + parseFloat(tabelaGastos[i].cells[2].firstChild.value).toFixed(2));
-                row.push(dicionarioDescricao[tabelaGastos[i].cells[3].firstChild.value - 1]);
+                row.push(dicionarioDescricao[tabelaGastos[i].cells[3].firstChild.value]);
                 row.push(tabelaGastos[i].cells[4].firstChild.value);
                 rowGastos.push(row);
                 row = [];
             }
-            doc.autoTable(['Data', 'Despesa', 'Valor', 'Descrição', 'Observação'], rowGastos, { startY: 234, styles: { cellPadding: 1.5, fillColor: [196, 243, 200], textColor:20, fontSize:8 },headerStyles: {textColor:20, fontSize:8}});            
+            doc.autoTable(['Data', 'Despesa', 'Valor', 'Descrição', 'Observação'], rowGastos, { startY: posInicioDetalhamento+2, styles: { cellPadding: 1.5, fillColor: [196, 243, 200], textColor:20, fontSize:8 },headerStyles: {textColor:20, fontSize:8}});            
             doc.save('Prestação de Contas.pdf');
         }
     }
@@ -332,8 +287,8 @@
             descricao = gastos[i].cells[3].firstChild.value;
 
             total += parseFloat(valor);
-            despesas[despesa - 1] += parseFloat(valor);
-            descricoes[descricao - 1] += parseFloat(valor);
+            despesas[despesa] += parseFloat(valor);
+            descricoes[descricao] += parseFloat(valor);
 
         }
 
@@ -385,5 +340,51 @@
     //Muda formato da data de YYYY-MM-DD para DD-MM-YYYY
     function changeDateFormat(date) {
         return date[8] + date[9] + '-' + date[5] + date[6] + '-' + date[0] + date[1] + date[2] + date[3];
+    }
+
+    // Preenche todas as tabelas a partir do arquivo de classes
+    function preencherTabelas(tabelaResumo,tabelaOrigens){
+        $.ajax({
+            type: "POST",
+            url: "/Home/CarregarItens",
+            success: function (data) {
+                for (var i = 0; i < data.resumos.length; i++) {
+                    var tabelaInsertResumo = document.getElementById(tabelaResumo).insertRow();
+                    var nome = tabelaInsertResumo.insertCell(0);
+                    var valor = tabelaInsertResumo.insertCell(1);
+                    nome.innerHTML = '<td><label></label></td>';
+                    valor.innerHTML = '<td>R$0.00<td>';
+                    
+                }
+                var linhasResumo = document.getElementById(tabelaResumo).rows;
+                for (var i = 0; i < data.resumos.length; i++) {
+                    linhasResumo[i].cells[0].innerHTML = data.resumos[i];
+                }
+                var tabelaInsertResumo = document.getElementById(tabelaResumo).insertRow();
+                var total = tabelaInsertResumo.insertCell(0);
+                var valorTotal = tabelaInsertResumo.insertCell(1);
+                total.innerHTML = '<td><label><b>Total</b></label></td>';
+                valorTotal.innerHTML = '<td><b>R$0.00<b/><td>';
+            
+                for (var i = 0; i < data.origens.length; i++) {
+                    var tabelaInsert = document.getElementById(tabelaOrigens).insertRow();
+                    var nome = tabelaInsert.insertCell(0);
+                    var apagar = tabelaInsert.insertCell(1);
+                    nome.innerHTML = '<td><label></label></td>';
+                    apagar.innerHTML = '<td>R$0.00<td>';
+                }
+                var linhasOrigens = document.getElementById(tabelaOrigens).rows;
+                for (var i = 0; i < data.origens.length; i++) {
+                    linhasOrigens[i].cells[0].innerHTML = data.origens[i];
+                }
+
+                var tabelaInsertOrigens = document.getElementById(tabelaOrigens).insertRow();
+                total = tabelaInsertOrigens.insertCell(0);
+                valorTotal = tabelaInsertOrigens.insertCell(1);
+                total.innerHTML = '<td><label><b>Total</b></label></td>';
+                valorTotal.innerHTML = '<td><b>R$0.00<b/><td>';
+            }
+        });
+        
     }
 </script>

@@ -18,21 +18,31 @@ namespace gastos.Models
 
         public Resumo lerClasses()
         {
-            StreamReader ler = new StreamReader("teste.json");
-            string json = ler.ReadToEnd();
-            Resumo classes = JsonConvert.DeserializeObject<Resumo>(json);
-            ler.Close();
-            return classes;
+            try
+            {
+                StreamReader ler = new StreamReader("classes.json");
+                string json = ler.ReadToEnd();
+                Resumo classes = JsonConvert.DeserializeObject<Resumo>(json);
+                ler.Close();
+                return classes;
+            }
+            catch
+            {
+                StreamWriter salvar = new StreamWriter("classes.json");
+                string jsonClasses = JsonConvert.SerializeObject(this);
+                salvar.WriteLine(jsonClasses);
+                salvar.Close();
+                return this;
+            }
         }
 
         public void salvarClasses()
         { 
-            StreamWriter salvar = new StreamWriter("teste.json");
+            StreamWriter salvar = new StreamWriter("classes.json");
             string jsonClasses = JsonConvert.SerializeObject(this);
             salvar.WriteLine(jsonClasses);
             salvar.Close();
         }
     }
-
 }
 

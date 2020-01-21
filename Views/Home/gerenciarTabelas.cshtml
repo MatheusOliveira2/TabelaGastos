@@ -73,7 +73,6 @@
         var tabelaResumo = document.getElementById(resumo).rows;
         var tabelaOrigens = document.getElementById(origens).rows;
 
-        alert('entrou');
         var listaResumo = [];
         var listaOrigens = [];
         for (var i = 1; i < tabelaResumo.length; i++) {
@@ -92,7 +91,7 @@
             type: "POST",
             url: "/Home/SalvarTabelas",
             data: postData,
-            success: function() { alert('foi'); }
+            success: function() {}
         });
 
     }
@@ -114,7 +113,7 @@
                 for (var i = 0; i < data.resumos.length; i++) {
                     linhasResumo[i+1].cells[0].firstChild.value = data.resumos[i];
                 }
-                alert(data.origens)
+                
                 for (var i = 0; i < data.origens.length; i++) {
                     var tabelaInsert = document.getElementById(tabelaOrigens).insertRow();
                     var nome = tabelaInsert.insertCell(0);
@@ -126,7 +125,6 @@
                 for (var i = 0; i < data.origens.length; i++) {
                     linhasOrigens[i+1].cells[0].firstChild.value = data.origens[i];
                 }
-                
             }
         });
         

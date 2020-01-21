@@ -12,10 +12,10 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            <nav class="navbar navbar-expand navbar-light">
                 <a class="navbar-brand" href="index.cshtml">@Html.ActionLink("Home", "Index", "Home")</a>
-                <a class="navbar text-dark"
-                    @Html.ActionLink("Gerenciar Tabelas", "gerenciarTabelas", "Home")
+                <a class="navbar"
+                    @Html.ActionLink("", "gerenciarTabelas", "Home")
                 </a>
             </nav>
             @RenderBody()
