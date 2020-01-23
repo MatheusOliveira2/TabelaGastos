@@ -117,6 +117,7 @@
 <script>
     //Adiciona linha na tabela de gastos
     function addRowToTable(tableId) {
+        // Pega elemento através do ID para adicionar os campos
         var x = document.getElementById(tableId).insertRow();
         var data = x.insertCell(0);
         var despesa = x.insertCell(1);
@@ -125,12 +126,14 @@
         var observacao = x.insertCell(4);
         var apagar = x.insertCell(5);
 
+        // Preenche os campos da linha da tabela de gastos
         data.innerHTML = '<td><input type="date" class="form-control"></td>';
         despesa.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"></select></td>';
         var tabelaGastos = document.getElementById(tableId).rows;
         var select = tabelaGastos[(tabelaGastos.length - 1)].cells[1].firstChild;
         var options = [];
 
+        //Preenche o dropDown de despesas
         var tabelaResumo = document.getElementById("tabelaResumo").rows;
         for (var i = 0; i < tabelaResumo.length-1; i++) {
             options.push(tabelaResumo[i].cells[0].innerText);
@@ -142,11 +145,13 @@
             el.value = i;
             select.appendChild(el);
         }
+
         valor.innerHTML = '<td><input type="text" class="form-control" onchange="UpdateTables(this)" onkeypress="return isNumberKey(event)"></td>';
         descricao.innerHTML = '<td><select class="custom-select" onchange="UpdateTables(this)"></select></td>'
         var selectDescricao = tabelaGastos[(tabelaGastos.length - 1)].cells[3].firstChild;
         var optionsDescricao = [];
 
+        //Preenche o dropdown de descrições
         var tabelaOrigens = document.getElementById("tabelaOrigens").rows;
         for (var i = 0; i < tabelaOrigens.length-1; i++) {
             optionsDescricao.push(tabelaOrigens[i].cells[0].innerText);
@@ -179,10 +184,12 @@
             alert("Preencha todos os campos!");
         }
 
+        //Cria PDF se todos os campos estiverem preenchidos
         else
         {
             var doc = new jsPDF();
 
+            //Largura da página
             var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
 
             var formulario = document.getElementById('formulario').elements;
@@ -259,8 +266,9 @@
         }
     }
 
-    //atualiza as tabelas de resumo e origens
+    //Atualiza as tabelas de resumo e origens
     function UpdateTables() {
+        //Recupera as linhas das tabelas através dos Ids
         resumo = document.getElementById('tabelaResumo').rows;
         origens = document.getElementById('tabelaOrigens').rows;
         gastos = document.getElementById('tabela_gastos').rows;
@@ -277,6 +285,8 @@
         }
 
         var total = 0.0;
+
+        //Atualiza os valores das tabelas de resumo e origens a partir da tabela de gastos e calcula o valor total
         for (i = 1; i < gastos.length; i++) {
             despesa = gastos[i].cells[1].firstChild.value;
 
@@ -292,16 +302,18 @@
 
         }
 
+        //Atualiza vizualmente a tabela de resumo
         for (var i = 0; i < resumo.length - 1; i++) {
             resumo[i].cells[1].innerHTML = "R$" + despesas[i].toFixed(2);
 
         }
 
+        //Atualiza vizualmente a tabela de origens
         for (var i = 0; i < origens.length - 1; i++) {
             origens[i].cells[1].innerHTML = "R$" + descricoes[i].toFixed(2);
         }
 
-
+        //Atualiza vizualmente os valores totais
         resumo[resumo.length - 1].cells[1].innerHTML = ("R$" + total.toFixed(2)).bold();
         origens[origens.length - 1].cells[1].innerHTML = ("R$" + total.toFixed(2)).bold();
     }
@@ -321,19 +333,70 @@
     function verificaCampos()
     {
         var dadosPessoais = document.getElementById("formulario");
-        if (dadosPessoais[0].value.length == 0 || dadosPessoais[1].value.length == 0 || dadosPessoais[2].value.length == 0 || dadosPessoais[3].value.length == 0 || dadosPessoais[4].value.length == 0 || dadosPessoais[5].value.length == 0)
-        {
+        if (dadosPessoais[0].value.length == 0 || dadosPessoais[1].value.length == 0 || dadosPessoais[2].value.length == 0 || dadosPessoais[3].value.length == 0 || dadosPessoais[4].value.length == 0 || dadosPessoais[5].value.length == 0) {
+            //Muda a borda do input para vermelho se estiver vazio
+            if (dadosPessoais[0].value.length == 0)
+                dadosPessoais[0].style.borderColor = "red";
+            else
+                dadosPessoais[0].style.borderColor = "grey";
+
+            if (dadosPessoais[1].value.length == 0)
+                dadosPessoais[1].style.borderColor = "red";
+            else
+                dadosPessoais[1].style.borderColor = "grey";
+
+            if (dadosPessoais[2].value.length == 0)
+                dadosPessoais[2].style.borderColor = "red";
+            else
+                dadosPessoais[2].style.borderColor = "grey";
+
+            if (dadosPessoais[3].value.length == 0)
+                dadosPessoais[3].style.borderColor = "red";
+            else
+                dadosPessoais[3].style.borderColor = "grey";
+
+            if (dadosPessoais[4].value.length == 0)
+                dadosPessoais[4].style.borderColor = "red";
+            else
+                dadosPessoais[4].style.borderColor = "grey";
+
+            if (dadosPessoais[5].value.length == 0)
+                dadosPessoais[5].style.borderColor = "red";
+            else
+                dadosPessoais[5].style.borderColor = "grey";
+
             return true;
         }
-
+        else {
+            dadosPessoais[0].style.borderColor = "grey";
+            dadosPessoais[1].style.borderColor = "grey";
+            dadosPessoais[2].style.borderColor = "grey";
+            dadosPessoais[3].style.borderColor = "grey";
+            dadosPessoais[4].style.borderColor = "grey";
+            dadosPessoais[5].style.borderColor = "grey";
+        }
+        var flag = false;
         var gastos = document.getElementById(("tabela_gastos")).rows;
         var vazio = false;
+
         if (gastos.length > 1) {
             for (var i = 1; i < gastos.length; i++)
             {
-                if(gastos[i].cells[0].firstChild.value.length == 0 || gastos[i].cells[1].firstChild.value.length == 0 || gastos[i].cells[2].firstChild.value.length == 0 || gastos[i].cells[3].firstChild.value.length == 0)
-                    return true;
+                if (gastos[i].cells[0].firstChild.value.length == 0 || gastos[i].cells[1].firstChild.value.length == 0 || gastos[i].cells[2].firstChild.value.length == 0 || gastos[i].cells[3].firstChild.value.length == 0) {
+                    flag = true;
+                    if (gastos[i].cells[0].firstChild.value.length == 0)
+                        gastos[i].cells[0].firstChild.style.borderColor = "red";
+                    else
+                        gastos[i].cells[0].firstChild.style.borderColor = "grey";
+
+                    if (gastos[i].cells[2].firstChild.value.length == 0)
+                        gastos[i].cells[2].firstChild.style.borderColor = "red";
+                    else
+                        gastos[i].cells[2].firstChild.style.borderColor = "grey";
+                }
             }
+            if(flag)
+                return true;
         }
         return false;
     }
@@ -346,8 +409,10 @@
     function preencherTabelas(tabelaResumo,tabelaOrigens){
         $.ajax({
             type: "POST",
-            url: "/Home/CarregarItens",
+            url: "/gastos/Home/CarregarItens",
             success: function (data) {
+
+                //Cria tabela de resumos com a quantidade de itens na classe de resumo
                 for (var i = 0; i < data.resumos.length; i++) {
                     var tabelaInsertResumo = document.getElementById(tabelaResumo).insertRow();
                     var nome = tabelaInsertResumo.insertCell(0);
@@ -356,16 +421,19 @@
                     valor.innerHTML = '<td>R$0.00<td>';
                     
                 }
+                //Coloca os valores na tabela de resumos
                 var linhasResumo = document.getElementById(tabelaResumo).rows;
                 for (var i = 0; i < data.resumos.length; i++) {
                     linhasResumo[i].cells[0].innerHTML = data.resumos[i];
                 }
+                //Insere a linha para receber o valor total na tabela
                 var tabelaInsertResumo = document.getElementById(tabelaResumo).insertRow();
                 var total = tabelaInsertResumo.insertCell(0);
                 var valorTotal = tabelaInsertResumo.insertCell(1);
                 total.innerHTML = '<td><label><b>Total</b></label></td>';
                 valorTotal.innerHTML = '<td><b>R$0.00<b/><td>';
-            
+
+                //Cria tabela de origens com a quantidade de itens na classe de origenm
                 for (var i = 0; i < data.origens.length; i++) {
                     var tabelaInsert = document.getElementById(tabelaOrigens).insertRow();
                     var nome = tabelaInsert.insertCell(0);
@@ -373,6 +441,7 @@
                     nome.innerHTML = '<td><label></label></td>';
                     apagar.innerHTML = '<td>R$0.00<td>';
                 }
+                //Coloca os valores na tabela de resumos
                 var linhasOrigens = document.getElementById(tabelaOrigens).rows;
                 for (var i = 0; i < data.origens.length; i++) {
                     linhasOrigens[i].cells[0].innerHTML = data.origens[i];

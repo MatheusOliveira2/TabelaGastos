@@ -18,7 +18,10 @@ namespace gastos.Controllers
         {
             _logger = logger;
         }
-
+        /// <summary>
+        /// Retorna a página inicial
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
@@ -28,13 +31,19 @@ namespace gastos.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Retorna a página de gerenciarTabelas
+        /// </summary>
+        /// <returns></returns>
         public IActionResult gerenciarTabelas() 
         {
             return View();
         }
 
-
+        /// <summary>
+        /// Comunica com o model para ler o arquivo de classes
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public Resumo CarregarItens()
         {
@@ -43,6 +52,11 @@ namespace gastos.Controllers
             return classes;
         }
 
+        /// <summary>
+        /// Comunica com  o model para salvas as classes no arquivo
+        /// </summary>
+        /// <param name="resumo"></param>
+        /// <param name="origens"></param>
         [HttpPost]
         public void SalvarTabelas(List<string> resumo, List<string> origens){
             Resumo classes = new Resumo();

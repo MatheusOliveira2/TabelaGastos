@@ -20,7 +20,7 @@ namespace gastos.Models
         {
             try
             {
-                StreamReader ler = new StreamReader("classes.json");
+                StreamReader ler = new StreamReader("../gastos-data/classes.json");
                 string json = ler.ReadToEnd();
                 Resumo classes = JsonConvert.DeserializeObject<Resumo>(json);
                 ler.Close();
@@ -28,7 +28,7 @@ namespace gastos.Models
             }
             catch
             {
-                StreamWriter salvar = new StreamWriter("classes.json");
+                StreamWriter salvar = new StreamWriter("../gastos-data/classes.json");
                 string jsonClasses = JsonConvert.SerializeObject(this);
                 salvar.WriteLine(jsonClasses);
                 salvar.Close();
@@ -38,7 +38,7 @@ namespace gastos.Models
 
         public void salvarClasses()
         { 
-            StreamWriter salvar = new StreamWriter("classes.json");
+            StreamWriter salvar = new StreamWriter("../gastos-data/classes.json");
             string jsonClasses = JsonConvert.SerializeObject(this);
             salvar.WriteLine(jsonClasses);
             salvar.Close();

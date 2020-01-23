@@ -6,27 +6,31 @@
     <title>@ViewData["Title"] - Prestação de Contas</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/sweetalert2.css" />
+
 </head>
 <body>
+    <script type="text/javascript" src="~/js/sweetalert2.js"></script>
+    <script type="text/javascript" src="~/js/senha.js"></script>
     <header>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             <nav class="navbar navbar-expand navbar-light">
                 <a class="navbar-brand" href="index.cshtml">@Html.ActionLink("Home", "Index", "Home")</a>
-                <a class="navbar"
-                    @Html.ActionLink("", "gerenciarTabelas", "Home")
-                </a>
+                <a class="navbar" href="javascript:autenticacao()">Gerenciar Tabelas</a>
             </nav>
             @RenderBody()
         </main>
         
     </div>
 
-    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
+

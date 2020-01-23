@@ -6,7 +6,6 @@
     <head>
         <script src="~/js/jQueryMin.js"></script>
     </head>
-
     <body onload="preencherTabelas('tabelaResumo','tabelaOrigens')">
         <div class="container">
             <div class="row">
@@ -27,7 +26,7 @@
                                 <th>Apagar</th>
                             </tr>
                     </table>
-                    <div class="col-12 text-left" style="padding:0">
+                    <div class="col-12 text-left">
                         <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaResumo')">Adicionar</button>
                     </div>
                 </div>
@@ -40,20 +39,19 @@
                                 <th>Apagar</th>
                             </tr>
                     </table>
-                    <div class="col-12 text-left" style="padding:0">
+                    <div class="col-12 text-left">
                         <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaOrigens')">Adicionar</button>
                     </div>
                 </div>
             </div>
-            <div class="col-12 text-left" style="padding:0">
-                <br />
-                <button type="button" class="btn btn-warning" onclick="salvar('tabelaResumo','tabelaOrigens')">Salvar</button>
+            <div class="col-12 text-left">
+                <button type="button" class="btn btn-warning" onclick="salvar('tabelaResumo','tabelaOrigens')" style="margin-top:5px">Salvar</button>
             </div>
         </div>
     </body>
 
 <script>
-
+    //Adiciona linha na tabela
     function addRowToTable(tableId) {
         var x = document.getElementById(tableId).insertRow();
         var nome = x.insertCell(0);
@@ -69,6 +67,7 @@
         //UpdateTables();
     }
 
+    //Salva as classes em arquivo
     function salvar(resumo, origens) {
         var tabelaResumo = document.getElementById(resumo).rows;
         var tabelaOrigens = document.getElementById(origens).rows;
@@ -89,19 +88,21 @@
                        
         $.ajax({
             type: "POST",
-            url: "/Home/SalvarTabelas",
+            url: "/gastos/Home/SalvarTabelas",
             data: postData,
-            success: function() {}
+            success: function() {alert("Salvo com Sucesso")}
         });
 
     }
-    
+
+    //Lê arquivo e preenche as tabelas de classes
     function preencherTabelas(tabelaResumo,tabelaOrigens)
     {
         $.ajax({
             type: "POST",
-            url: "/Home/CarregarItens",
+            url: "/gastos/Home/CarregarItens",
             success: function (data) {
+                //Preenche a tabela de classes de tipos de despesa
                 for (var i = 0; i < data.resumos.length; i++) {
                     var tabelaInsert = document.getElementById(tabelaResumo).insertRow();
                     var nome = tabelaInsert.insertCell(0);
@@ -113,7 +114,7 @@
                 for (var i = 0; i < data.resumos.length; i++) {
                     linhasResumo[i+1].cells[0].firstChild.value = data.resumos[i];
                 }
-                
+                //Preenche a tabela de classes de tipos de descrições
                 for (var i = 0; i < data.origens.length; i++) {
                     var tabelaInsert = document.getElementById(tabelaOrigens).insertRow();
                     var nome = tabelaInsert.insertCell(0);
