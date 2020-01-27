@@ -16,36 +16,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 text-center">
-                    <h2>Categorias de Despesa</h2>
+                <div class="col-6 text-center" style="right:20px">
 
-                    <table class="table" id="tabelaResumo">
+                    <h2>Categorias de Despesa</h2>
+                    <table class="table jumbotron" id="tabelaResumo">
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Apagar</th>
                             </tr>
                     </table>
-                    <div class="col-12 text-left">
+                    <div class="col-12 text-left" style="padding-left:0px">
                         <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaResumo')">Adicionar</button>
                     </div>
                 </div>
-                <div class="col-6 text-center">
+                <div class="col-6 text-center" style="left:20px">
                     <h2>Categorias de Descrição</h2>
-                    <table class="table" id="tabelaOrigens">
+                    <table class="table jumbotron" id="tabelaOrigens">
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Apagar</th>
                             </tr>
                     </table>
-                    <div class="col-12 text-left">
+                    <div class="col-12 text-left" style="padding-left:0px">
                         <button type="button" class="btn btn-primary" onclick="addRowToTable('tabelaOrigens')">Adicionar</button>
                     </div>
                 </div>
             </div>
-            <div class="col-12 text-left">
-                <button type="button" class="btn btn-warning" onclick="salvar('tabelaResumo','tabelaOrigens')" style="margin-top:5px">Salvar</button>
+            <div class="col-12 text-left" style="padding:0px">
+                <button type="button" class="btn-lg btn-warning btn-block" onclick="salvar('tabelaResumo','tabelaOrigens')" style="margin-top:5px">Salvar</button>
             </div>
         </div>
     </body>

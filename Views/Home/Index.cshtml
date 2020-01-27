@@ -9,18 +9,18 @@
     </head>
 
 <body onload="preencherTabelas('tabelaResumo','tabelaOrigens')">
-    <div class="container" style="margin-top:20px">
+    <div class="container" style="margin-top:20px;width:100%">
         <div class="row">
             <div class="text-center col-sm">
                 <h1 class="display-4">Prestação de Contas</h1>
             </div>
         </div>
-        <div class="row">
+        <div class="row jumbotron">
             <form class="col-12" id="formulario">
                 <h2>Dados Pessoais</h2>
                 <div class="form-row">
                     <div class="form-group col-md-8">
-                        <label>Viagem</label>
+                        <label>Viagem (Destino)</label>
                         <input type="text" class="form-control" />
                     </div>
                 </div>
@@ -71,12 +71,12 @@
                     </thead>
                 </table>
             </form>
-        </div>
         <div class="col-12 text-left">
             <button type="button" class="btn btn-primary" onclick="addRowToTable('tabela_gastos')">Adicionar</button><br /><br />
         </div>
+        </div>
 
-        <div class="row">
+        <div class="row jumbotron">
             <div class="col-12">
                 <br />
                 <H2>Resumo</H2>
@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row jumbotron">
             <div class="col-12">
                 <br />
                 <H2>Origens</H2>
@@ -106,8 +106,8 @@
                 </table>
             </div>
         </div>
-        <div class="col-12 text-left" style="padding-left:0px">
-            <button type="button" class="btn btn-warning" onclick="CriaPDF()">Salvar</button>
+        <div class="col-12 text-center" style="padding-left:0px">
+            <button type="button" class="btn-lg btn-warning btn-block" onclick="CriaPDF()">Salvar</button>
         </div>
     </div>
     
@@ -201,7 +201,7 @@
             doc.setFontSize(16);
             doc.text('Dados Pessoais', 15, 30);
             doc.setFontSize(10);
-            doc.text('Viagem: ' + formulario[0].value, 15, 40);
+            doc.text('Viagem (Destino): ' + formulario[0].value, 15, 40);
             doc.text('De ' + changeDateFormat(formulario[1].value) + ' até ' + changeDateFormat(formulario[2].value), 15, 45);
             doc.text('Funcionário: '+ formulario[3].value, 15, 50);
             doc.text('Número do Cartão: '+ formulario[4].value, 15, 55);
@@ -321,11 +321,13 @@
     //Verifica se o caractere digitado é um número
     function isNumberKey(evt)
     {
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-
-        if ((charCode > 47 && charCode < 58) || charCode == 46)
+        if ((evt.keyCode > 47 && evt.keyCode < 58) || evt.keyCode == 46)
             return true;
-      
+        //Substitui , por . nos campos de valor
+        if (evt.keyCode == 44) {
+            evt.currentTarget.value += '.';
+            return false;
+        }
         return false;
     }
 

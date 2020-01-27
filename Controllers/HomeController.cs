@@ -65,6 +65,13 @@ namespace gastos.Controllers
             classes.salvarClasses();
         }
 
+        public bool AutenticarSenha(string senha)
+        {
+            if (senha == "senha dificil@adm")
+                return true;
+
+            return false;
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

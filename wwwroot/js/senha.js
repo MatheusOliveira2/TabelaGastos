@@ -1,4 +1,4 @@
-﻿async function autenticacao(){
+﻿async function autenticacao() {
     const { value: password } = await Swal.fire({
         title: 'Digite sua Senha',
         input: 'password',
@@ -9,18 +9,25 @@
         }
     })
 
-    if (password == "senha dificil@adm") {
-        Swal.fire('Senha Correta', '', 'success');
-        $.ajax({
-            type: "POST",
-            url: "/gastos/Home/gerenciarTabelas",
-            success: function (data) {
-                window.location.replace("/gastos/home/gerenciartabelas");
+    $.ajax({
+        type: "POST",
+        url: "/gastos/Home/AutenticarSenha",
+        data: { senha: password},
+        success: function (data) {
+            if (data) {
+                Swal.fire('Senha Correta', '', 'success');
+                $.ajax({
+                    type: "POST",
+                    url: "/gastos/Home/gerenciarTabelas",
+                    success: function () {
+                        window.location.replace("/gastos/home/gerenciartabelas");
+                    }
+                })
             }
-        })
-    }
-    else {
-        Swal.fire('Senha Incorreta', '', 'error');
-    }
-    
+            else {
+                Swal.fire('Senha Incorreta', '', 'error');
+            }
+        }
+
+    })
 }
